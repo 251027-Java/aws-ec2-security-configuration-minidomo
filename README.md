@@ -26,12 +26,12 @@ You are deploying a web application that needs:
 ### Task 1: Design Security Group Rules
 Fill in the following table with appropriate values:
 
-| Rule | Type | Protocol | Port | Source | Purpose |
-|------|------|----------|------|--------|---------|
-| 1    | SSH  | TCP      | ?    | ?      | Admin access |
-| 2    | ?    | TCP      | 80   | ?      | Web traffic |
-| 3    | ?    | TCP      | 443  | ?      | Secure web |
-| 4    | Custom TCP | TCP | ?  | 10.0.0.0/8 | Internal API |
+| Rule | Type       | Protocol | Port | Source       | Purpose      |
+| ---- | ---------- | -------- | ---- | ------------ | ------------ |
+| 1    | SSH        | TCP      | 22   | 158.43.1.197 | Admin access |
+| 2    | HTTP       | TCP      | 80   | 0.0.0.0/0    | Web traffic  |
+| 3    | HTTPS      | TCP      | 443  | 0.0.0.0/0    | Secure web   |
+| 4    | Custom TCP | TCP      | 8080 | 10.0.0.0/8   | Internal API |
 
 ### Task 2: Create Security Group (Console)
 1. Navigate to EC2 → Security Groups → Create
@@ -74,11 +74,11 @@ aws ec2 authorize-security-group-ingress \
 ### Task 5: Troubleshooting Exercise
 Given these symptoms, identify the likely cause:
 
-| Symptom | Likely Cause | Solution |
-|---------|--------------|----------|
-| Can't SSH to instance | ? | ? |
-| Website not loading | ? | ? |
-| API calls timing out | ? | ? |
+| Symptom               | Likely Cause                                                                            | Solution                                                                                      |
+| --------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| Can't SSH to instance | Source IP for SSH in inbound rules probably doesn't match your current IP               | Obtain your IP and add it as a source for SSH                                                 |
+| Website not loading   | Website might be hosted on different port than what was set in the rules                | Set port in security group to match the port of your website                                  |
+| API calls timing out  | Source IP(s) may not include the IP you're trying to call the API from  with HTTP/HTTPS | Use `0.0.0.0/0` or include all the IPs that should be able to access your API with HTTP/HTTPS |
 
 ## Deliverables
 1. Completed security group rules table (Task 1)
